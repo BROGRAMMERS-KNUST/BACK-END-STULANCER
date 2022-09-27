@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   rating: Number,
   profileDescription: String,
   brandName: String,
+  field: String,
 });
 
 export default mongoose.model("User", userSchema);

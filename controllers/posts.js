@@ -3,7 +3,11 @@ import user from "../models/user.js";
 
 export const getAllPosts = async (req, res) => {
   try {
-    const stulancers = await user.find({ serviceType: "servicer" });
+    const { Data } = req.body;
+    console.log(Data);
+
+    const stulancers = await user.find({ fullName: Data.field });
+    console.log(stulancers);
     res.status(200).json({ stulancers });
   } catch (error) {
     res.status(404).json({ msg: error });
