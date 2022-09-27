@@ -5,12 +5,12 @@ import bcrypt from 'bcrypt';
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
-  const { fullName, email, password, serviceType } = req.body;
+  const { fullName, email, username, password, serviceType } = req.body;
   try {
     //CHECKING IF USER EXISTS
     const existingUser = await User.findOne({ email });
     if (existingUser)
-      return res.status(404).json({ message: 'User already exists' });
+      return res.status(404).json({ message: 'Email already exists' });
 
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -19,6 +19,7 @@ export const signup = async (req, res) => {
     const data = {
       fullName: fullName,
       email: email,
+      username: username,
       password: hashedPassword,
       serviceType: serviceType,
     };
@@ -28,6 +29,7 @@ export const signup = async (req, res) => {
     const token = Jwt.sign(
       {
         name: result.name,
+        email: result.email,
         password: result.password,
         email: result.email,
         serviceType: result.serviceType,
@@ -53,7 +55,7 @@ export const login = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await User.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: 'User does not exist' });
+      return res.status(404).json({ message: 'Email does not exist' });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -67,7 +69,7 @@ export const login = async (req, res) => {
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
       {
-        email: existingUser.email,
+        username: existingUser.email,
         id: existingUser._id,
       },
       'test'
