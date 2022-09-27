@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
-  const { fullName, email, username, password, serviceType } = req.body;
+  const { fullName, email, password, serviceType } = req.body;
   try {
     //CHECKING IF USER EXISTS
     const existingUser = await User.findOne({ email });
@@ -31,7 +31,6 @@ export const signup = async (req, res) => {
         name: result.name,
         email: result.email,
         password: result.password,
-        email: result.email,
         serviceType: result.serviceType,
         id: result._id,
       },
@@ -69,7 +68,7 @@ export const login = async (req, res) => {
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
       {
-        username: existingUser.email,
+        email: existingUser.email,
         id: existingUser._id,
       },
       'test'
