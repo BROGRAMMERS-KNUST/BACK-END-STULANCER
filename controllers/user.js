@@ -5,12 +5,12 @@ import bcrypt from "bcrypt";
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
-  const { fullName, username, password, serviceType } = req.body;
+  const { fullName, email, username, password, serviceType } = req.body;
   try {
     //CHECKING IF USER EXISTS
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ email });
     if (existingUser)
-      return res.status(404).json({ message: "User already exists" });
+      return res.status(404).json({ message: "Email already exists" });
 
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -18,6 +18,7 @@ export const signup = async (req, res) => {
     //CREATING USER DATA/PROFILE
     const data = {
       fullName: fullName,
+      email: email,
       username: username,
       password: hashedPassword,
       serviceType: serviceType,
@@ -28,6 +29,7 @@ export const signup = async (req, res) => {
     const token = Jwt.sign(
       {
         name: result.name,
+        email:result.email,
         password: result.password,
         username: result.username,
         serviceType: result.serviceType,
@@ -47,12 +49,12 @@ export const signup = async (req, res) => {
 //LOGIN CONTROLLER
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
     //CHECKING IF USER EXISTS
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: "User does not exist" });
+      return res.status(404).json({ message: "Email does not exist" });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -66,7 +68,7 @@ export const login = async (req, res) => {
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
       {
-        username: existingUser.username,
+        username: existingUser.email,
         id: existingUser._id,
       },
       "test"
