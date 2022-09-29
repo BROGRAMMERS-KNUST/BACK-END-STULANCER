@@ -19,7 +19,6 @@ export const signup = async (req, res) => {
     const data = {
       fullName: fullName,
       email: email,
-      username: username,
       password: hashedPassword,
       serviceType: serviceType,
     };

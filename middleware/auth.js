@@ -1,9 +1,9 @@
-import Jwt from "jsonwebtoken";
+import Jwt from 'jsonwebtoken';
 
 const auth = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split("", [1]);
-    let decodedData = Jwt.verify(token, "test");
+    const token = req.headers.Authorization.split('', [1]);
+    let decodedData = Jwt.verify(token, 'test');
     req.userId = decodedData.id;
     next();
   } catch (error) {
