@@ -1,21 +1,17 @@
-import PostMessage from "../models/postMessage.js";
 import user from "../models/user.js";
 
-export const getAllPosts = async (req, res) => {
+export const getProfiles = async (req, res) => {
   try {
     const { Data } = req.body;
-    console.log(Data);
 
-    const stulancers = await user.find({ fullName: Data.field });
-    console.log(stulancers);
+    const stulancers = await user.find(Data);
     res.status(200).json({ stulancers });
   } catch (error) {
     res.status(404).json({ msg: error });
   }
 };
-export const createPost = async (req, res) => {
+export const createProfile = async (req, res) => {
   const newPost = await PostMessage.create(req.body);
-  console.log(newPost);
   try {
     res.status(200).json(newPost);
   } catch (error) {
