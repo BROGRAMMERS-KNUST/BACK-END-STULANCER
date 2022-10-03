@@ -6,17 +6,7 @@ import mongoose from 'mongoose';
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
-  const {
-    fullName,
-    email,
-    password,
-    serviceType,
-    bio,
-    portfolioLink,
-    telephoneNumber,
-    whatsappLink,
-    service,
-  } = req.body;
+  const { fullName, email, password, serviceType, profilePic } = req.body;
   try {
     //CHECKING IF USER EXISTS
     const existingUser = await hirer.findOne({ email });
@@ -32,11 +22,7 @@ export const signup = async (req, res) => {
       email: email,
       password: hashedPassword,
       serviceType: serviceType,
-      bio: bio,
-      portfolioLink: portfolioLink,
-      telephoneNumber: telephoneNumber,
-      whatsappLink: whatsappLink,
-      service: service,
+      profilePic: profilePic,
     };
     const result = await hirer.create(data);
 
@@ -47,6 +33,7 @@ export const signup = async (req, res) => {
         email: result.email,
         password: result.password,
         serviceType: result.serviceType,
+        profilePic: result.profilePic,
         id: result._id,
       },
       'test',
@@ -73,6 +60,7 @@ export const signupserviceprovider = async (req, res) => {
     telephoneNumber,
     whatsappLink,
     service,
+    profilePic,
   } = req.body;
   try {
     //CHECKING IF USER EXISTS
@@ -94,6 +82,7 @@ export const signupserviceprovider = async (req, res) => {
       telephoneNumber: telephoneNumber,
       whatsappLink: whatsappLink,
       service: service,
+      profilePic: profilePic,
     };
     const result = await serviceprovider.create(data);
 
@@ -109,6 +98,7 @@ export const signupserviceprovider = async (req, res) => {
         telephoneNumber: result.telephoneNumber,
         whatsappLink: result.whatsappLink,
         service: result.service,
+        profilePic: result.profilePic,
         id: result._id,
       },
       'test',
