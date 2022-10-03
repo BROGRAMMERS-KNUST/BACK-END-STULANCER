@@ -1,14 +1,25 @@
 import Jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import hirer from '../models/hirer.js';
+import serviceprovider from '../models/serviceprovider.js';
 import bcrypt from 'bcrypt';
-
+import mongoose from 'mongoose';
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
-  const { fullName, email, password, serviceType } = req.body;
+  const {
+    fullName,
+    email,
+    password,
+    serviceType,
+    bio,
+    portfolioLink,
+    telephoneNumber,
+    whatsappLink,
+    service,
+  } = req.body;
   try {
     //CHECKING IF USER EXISTS
-    const existingUser = await User.findOne({ email });
+    const existingUser = await hirer.findOne({ email });
     if (existingUser)
       return res.status(404).json({ message: 'Email already exists' });
 
@@ -21,8 +32,13 @@ export const signup = async (req, res) => {
       email: email,
       password: hashedPassword,
       serviceType: serviceType,
+      bio: bio,
+      portfolioLink: portfolioLink,
+      telephoneNumber: telephoneNumber,
+      whatsappLink: whatsappLink,
+      service: service,
     };
-    const result = await User.create(data);
+    const result = await hirer.create(data);
 
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
@@ -45,13 +61,75 @@ export const signup = async (req, res) => {
   }
 };
 
-//LOGIN CONTROLLER
+//SERVICE PROVIDER CONTROLLER
+export const signupserviceprovider = async (req, res) => {
+  const {
+    fullName,
+    email,
+    password,
+    serviceType,
+    bio,
+    portfolioLink,
+    telephoneNumber,
+    whatsappLink,
+    service,
+  } = req.body;
+  try {
+    //CHECKING IF USER EXISTS
+    const existingUser = await serviceprovider.findOne({ email });
+    if (existingUser)
+      return res.status(404).json({ message: 'Email already exists' });
 
-export const login = async (req, res) => {
+    //ENCRYPTING PASSWORD
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    //CREATING USER DATA/PROFILE
+    const data = {
+      fullName: fullName,
+      email: email,
+      password: hashedPassword,
+      serviceType: serviceType,
+      bio: bio,
+      portfolioLink: portfolioLink,
+      telephoneNumber: telephoneNumber,
+      whatsappLink: whatsappLink,
+      service: service,
+    };
+    const result = await serviceprovider.create(data);
+
+    //CREATING WEB TOKEN FOR USER
+    const token = Jwt.sign(
+      {
+        name: result.name,
+        email: result.email,
+        password: result.password,
+        serviceType: result.serviceType,
+        bio: result.bio,
+        portfolioLink: result.portfolioLink,
+        telephoneNumber: result.telephoneNumber,
+        whatsappLink: result.whatsappLink,
+        service: result.service,
+        id: result._id,
+      },
+      'test',
+      { expiresIn: '1hr' }
+    );
+
+    //SENDING RESPONSE
+    res.status(200).json({ result, token });
+    console.log(result);
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
+//LOGIN CONTROLLER FOR HIRER
+
+export const loginHirer = async (req, res) => {
   const { email, password } = req.body;
   try {
     //CHECKING IF USER EXISTS
-    const existingUser = await User.findOne({ email });
+    const existingUser = await hirer.findOne({ email });
     if (!existingUser)
       return res.status(404).json({ message: 'Email does not exist' });
 
@@ -77,4 +155,55 @@ export const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
+};
+
+//LOGIN CONTROLLER FOR SERVICE PROVIDER
+
+export const loginServicer = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    //CHECKING IF USER EXISTS
+    const existingUser = await serviceprovider.findOne({ email });
+    if (!existingUser)
+      return res.status(404).json({ message: 'Email does not exist' });
+
+    // //VERIFYING LOGIN PASSWORD
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordCorrect)
+      return res.status(404).json({ message: 'Invalid credentials' });
+
+    //CREATING WEB TOKEN FOR USER
+    const token = Jwt.sign(
+      {
+        email: existingUser.email,
+        id: existingUser._id,
+      },
+      'test'
+    );
+
+    res.status(200).json({ result: existingUser, token });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
+//UPDATE SERVICE PROVIDER
+export const updateserviceProvider = async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  console.log(id);
+  console.log(req.body);
+
+  //if (!mongoose.Types.ObjectId.isValid(id))
+  //return res.status(404).send(`No account with id: ${id}`);
+
+  const result = await serviceprovider.findByIdAndUpdate(id, data, {
+    new: true,
+  });
+
+  res.status(200).json({ success: result });
 };

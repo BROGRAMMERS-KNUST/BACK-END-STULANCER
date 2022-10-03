@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 const PORT = process.env.PORT;
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.MONGO_URI_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
