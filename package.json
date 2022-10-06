@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": " nodemon --max-http-header-size=800000 index.js"
   },
   "keywords": [],
   "author": "",
