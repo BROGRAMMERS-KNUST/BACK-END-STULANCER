@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.post('/signup', signup);
 router.post('/signupservice', signupserviceprovider);
+router.patch('/updateservice/:id', updateserviceProvider);
 router.patch('/signupservice/:id', updateserviceProvider);
 router.post('/loginhirer', loginHirer);
 router.post('/loginservicer', loginServicer);

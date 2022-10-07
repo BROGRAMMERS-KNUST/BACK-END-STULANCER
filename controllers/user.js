@@ -1,8 +1,8 @@
-import Jwt from "jsonwebtoken";
-import hirer from "../models/hirer.js";
-import serviceprovider from "../models/serviceprovider.js";
-import bcrypt from "bcrypt";
-import mongoose from "mongoose";
+import Jwt from 'jsonwebtoken';
+import hirer from '../models/hirer.js';
+import serviceprovider from '../models/serviceprovider.js';
+import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
@@ -11,7 +11,7 @@ export const signup = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await hirer.findOne({ email });
     if (existingUser)
-      return res.status(404).json({ message: "Email already exists" });
+      return res.status(404).json({ message: 'Email already exists' });
 
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -36,15 +36,15 @@ export const signup = async (req, res) => {
         profilePic: result.profilePic,
         id: result._id,
       },
-      "test",
-      { expiresIn: "1hr" }
+      'test',
+      { expiresIn: '1hr' }
     );
 
     //SENDING RESPONSE
     res.status(200).json({ result, token });
     console.log(data);
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -66,7 +66,7 @@ export const signupserviceprovider = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await serviceprovider.findOne({ email });
     if (existingUser)
-      return res.status(404).json({ message: "Email already exists" });
+      return res.status(404).json({ message: 'Email already exists' });
 
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -101,15 +101,15 @@ export const signupserviceprovider = async (req, res) => {
         profilePic: result.profilePic,
         id: result._id,
       },
-      "test",
-      { expiresIn: "1hr" }
+      'test',
+      { expiresIn: '1hr' }
     );
 
     //SENDING RESPONSE
     res.status(200).json({ result, token });
     console.log(result);
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -121,7 +121,7 @@ export const loginHirer = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await hirer.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: "Email does not exist" });
+      return res.status(404).json({ message: 'Email does not exist' });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -130,7 +130,7 @@ export const loginHirer = async (req, res) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(404).json({ message: "Invalid credentials" });
+      return res.status(404).json({ message: 'Invalid credentials' });
 
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
@@ -138,12 +138,12 @@ export const loginHirer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      "test"
+      'test'
     );
 
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -155,7 +155,7 @@ export const loginServicer = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await serviceprovider.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: "Email does not exist" });
+      return res.status(404).json({ message: 'Email does not exist' });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -164,7 +164,7 @@ export const loginServicer = async (req, res) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(404).json({ message: "Invalid credentials" });
+      return res.status(404).json({ message: 'Invalid credentials' });
 
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
@@ -172,12 +172,12 @@ export const loginServicer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      "test"
+      'test'
     );
 
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -190,10 +190,14 @@ export const updateserviceProvider = async (req, res) => {
 
   //if (!mongoose.Types.ObjectId.isValid(id))
   //return res.status(404).send(`No account with id: ${id}`);
+  try {
+    const result = await serviceprovider.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+    });
 
-  const result = await serviceprovider.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-
-  res.status(200).json({ success: result });
+    res.status(200).json({ result: result });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
 };
