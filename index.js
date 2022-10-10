@@ -1,9 +1,20 @@
+<<<<<<< HEAD
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+=======
+import mongoose from 'mongoose';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import http from 'http';
+>>>>>>> d6ee8d336893de9e1f2a07889ec10e27b2aba643
 
+let size = http.maxHeaderSize;
+console.log('Max HTTP Header size is', size);
 const app = express();
 dotenv.config();
 app.use(cors());
