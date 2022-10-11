@@ -102,7 +102,7 @@ export const signupserviceprovider = async (req, res) => {
         id: result._id,
       },
       "test",
-      { expiresIn: "1hr" }
+      { exp: Date.now() / 1000 + 1 }
     );
 
     //SENDING RESPONSE
@@ -138,7 +138,8 @@ export const loginHirer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      "test"
+      "test",
+      { exp: Date.now() / 1000 + 1 }
     );
 
     res.status(200).json({ result: existingUser, token });
@@ -172,9 +173,10 @@ export const loginServicer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      "test"
+      "test",
+      { exp: Date.now() / 1000 + 1 }
     );
-
+    console.log(existingUser);
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
