@@ -138,8 +138,7 @@ export const loginHirer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      "test",
-      { exp: Date.now() / 1000 + 1 }
+      "test"
     );
 
     res.status(200).json({ result: existingUser, token });
@@ -173,8 +172,7 @@ export const loginServicer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      "test",
-      { exp: Date.now() / 1000 + 1 }
+      "test"
     );
     console.log(existingUser);
     res.status(200).json({ result: existingUser, token });
