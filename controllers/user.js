@@ -1,6 +1,7 @@
 import Jwt from 'jsonwebtoken';
 import hirer from '../models/hirer.js';
 import serviceprovider from '../models/serviceprovider.js';
+import feedbackModel from '../models/feedback.js';
 import bcrypt from 'bcrypt';
 //SIGN UP CONTROLLER
 
@@ -192,6 +193,25 @@ export const updateserviceProvider = async (req, res) => {
     });
 
     res.status(200).json({ result: result });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
+//SENDING FEEDBACK TO DATABASE
+export const feedback = async (req, res) => {
+  const { fullName, email, feedback } = req.body;
+
+  const data = {
+    fullName,
+    email,
+    feedback,
+  };
+  try {
+    const result = await feedbackModel.create(data);
+
+    res.status(200).json({ result });
+    console.log(result);
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }

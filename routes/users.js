@@ -5,6 +5,7 @@ import {
   updateserviceProvider,
   loginHirer,
   loginServicer,
+  feedback,
 } from '../controllers/user.js';
 import auth from '../middleware/auth.js';
 
@@ -16,5 +17,6 @@ router.patch('/updateservice/:id', updateserviceProvider);
 router.patch('/signupservice/:id', updateserviceProvider);
 router.post('/loginhirer', loginHirer);
 router.post('/loginservicer', loginServicer);
+router.post('/feedback', feedback);
 
 export default router;
