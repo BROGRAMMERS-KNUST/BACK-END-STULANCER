@@ -30,6 +30,8 @@ mongoose
 //ROUTING
 import postRoute from "./routes/posts.js";
 import userRoute from "./routes/users.js";
+import passwordrecovery from "./routes/passwordrecovery.js";
 
 app.use("/posts", postRoute);
 app.use("/user", userRoute);
+app.use("/passwordrecovery", passwordrecovery);

@@ -2,7 +2,6 @@ import Jwt from "jsonwebtoken";
 import hirer from "../models/hirer.js";
 import serviceprovider from "../models/serviceprovider.js";
 import bcrypt from "bcrypt";
-import mongoose from "mongoose";
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
@@ -174,7 +173,6 @@ export const loginServicer = async (req, res) => {
       },
       "test"
     );
-    console.log(existingUser);
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
@@ -185,8 +183,6 @@ export const loginServicer = async (req, res) => {
 export const updateserviceProvider = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  console.log(id);
-  console.log(req.body);
 
   //if (!mongoose.Types.ObjectId.isValid(id))
   //return res.status(404).send(`No account with id: ${id}`);
