@@ -5,7 +5,6 @@ const serviceproviderSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   serviceType: { type: String, required: true },
-  serviceTags: [String],
   rating: { Number, default: 0 },
   field: String,
   bio: String,
@@ -14,6 +13,10 @@ const serviceproviderSchema = new mongoose.Schema({
   whatsappLink: String,
   service: String,
   profilePic: String,
+  startingPrice: Number,
+  brandPic1: String,
+  brandPic2: String,
+  brandPic3: String,
 });
 
 export default mongoose.model('ServiceProvider', serviceproviderSchema);
