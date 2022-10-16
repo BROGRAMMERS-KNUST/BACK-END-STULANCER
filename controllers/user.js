@@ -3,10 +3,12 @@ import hirer from '../models/hirer.js';
 import serviceprovider from '../models/serviceprovider.js';
 import feedbackModel from '../models/feedback.js';
 import bcrypt from 'bcrypt';
+import sharp from 'sharp';
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
   const { fullName, email, password, serviceType, profilePic } = req.body;
+
   try {
     //CHECKING IF USER EXISTS
     const existingUser = await hirer.findOne({ email });
@@ -62,8 +64,10 @@ export const signupserviceprovider = async (req, res) => {
     service,
     profilePic,
   } = req.body;
+
   try {
     //CHECKING IF USER EXISTS
+
     const existingUser = await serviceprovider.findOne({ email });
     if (existingUser)
       return res.status(404).json({ message: 'Email already exists' });
