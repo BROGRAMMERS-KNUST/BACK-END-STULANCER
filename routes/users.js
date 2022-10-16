@@ -8,6 +8,7 @@ import {
   feedback,
   updatehirer,
   updatebrandpics,
+  updatestartingprice,
 } from '../controllers/user.js';
 import auth from '../middleware/auth.js';
 
@@ -18,6 +19,7 @@ router.post('/signupservice', signupserviceprovider);
 router.patch('/updateservice/:id', updateserviceProvider);
 router.patch('/updatehirer/:id', updatehirer);
 router.patch('/updatebrandpics/:id', updatebrandpics);
+router.patch('/updatestartingprice/:id', updatestartingprice);
 router.patch('/signupservice/:id', updateserviceProvider);
 router.post('/loginhirer', loginHirer);
 router.post('/loginservicer', loginServicer);
