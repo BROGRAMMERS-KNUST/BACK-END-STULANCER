@@ -239,3 +239,20 @@ export const feedback = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
+
+//UPDATE BRAND PICS
+export const updatebrandpics = async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+
+  try {
+    const result = await serviceprovider.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({ result: result });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
