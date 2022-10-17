@@ -62,6 +62,7 @@ export const signupserviceprovider = async (req, res) => {
     telephoneNumber,
     whatsappLink,
     service,
+    specificService,
     profilePic,
   } = req.body;
 
@@ -86,6 +87,7 @@ export const signupserviceprovider = async (req, res) => {
       telephoneNumber: telephoneNumber,
       whatsappLink: whatsappLink,
       service: service,
+      specificService: specificService,
       profilePic: profilePic,
     };
     const result = await serviceprovider.create(data);
@@ -103,6 +105,7 @@ export const signupserviceprovider = async (req, res) => {
         whatsappLink: result.whatsappLink,
         service: result.service,
         profilePic: result.profilePic,
+        specificService: result.specificService,
         id: result._id,
       },
       'test'

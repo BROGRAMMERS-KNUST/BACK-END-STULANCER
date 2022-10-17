@@ -12,6 +12,7 @@ const serviceproviderSchema = new mongoose.Schema({
   telephoneNumber: Number,
   whatsappLink: String,
   service: String,
+  specificService: String,
   profilePic: String,
   startingPrice: Number,
   brandPic1: String,
