@@ -15,6 +15,6 @@ export const createProfile = async (req, res) => {
   try {
     res.status(200).json(newPost);
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
   }
 };
