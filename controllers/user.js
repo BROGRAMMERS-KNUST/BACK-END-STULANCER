@@ -210,6 +210,8 @@ export const updatehirer = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
 
+  //if (!mongoose.Types.ObjectId.isValid(id))
+  //return res.status(404).send(`No account with id: ${id}`);
   try {
     const result = await hirer.findByIdAndUpdate(id, data, {
       new: true,
