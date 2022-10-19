@@ -127,7 +127,7 @@ export const loginHirer = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await hirer.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: 'Email does not exist' });
+      return res.status(404).json({ message: 'User does not exist' });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -136,7 +136,7 @@ export const loginHirer = async (req, res) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(404).json({ message: 'Invalid credentials' });
+      return res.status(404).json({ message: 'Wrong Email/Password' });
 
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
@@ -147,7 +147,11 @@ export const loginHirer = async (req, res) => {
       'test'
     );
 
-    res.status(200).json({ result: existingUser, token });
+    res.status(200).json({
+      result: existingUser,
+      token,
+      message: 'Logged In successfully !',
+    });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -161,7 +165,7 @@ export const loginServicer = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await serviceprovider.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: 'Email does not exist' });
+      return res.status(404).json({ message: 'Users does not exist' });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -170,7 +174,7 @@ export const loginServicer = async (req, res) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(404).json({ message: 'Invalid credentials' });
+      return res.status(404).json({ message: 'Wrong Email/Password' });
 
     //CREATING WEB TOKEN FOR USER
     const token = Jwt.sign(
@@ -180,7 +184,11 @@ export const loginServicer = async (req, res) => {
       },
       'test'
     );
-    res.status(200).json({ result: existingUser, token });
+    res.status(200).json({
+      result: existingUser,
+      token,
+      message: 'Logged In successfully !',
+    });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -199,7 +207,7 @@ export const updateserviceProvider = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result, message: 'Submitted successfully !' });
+    res.status(200).json({ result, message: 'Update Successful !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -218,7 +226,7 @@ export const updatehirer = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result, message: 'Updated successfully !' });
+    res.status(200).json({ result, message: 'Update Successful !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -254,7 +262,7 @@ export const updatebrandpics = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result, message: 'Updated successfully !' });
+    res.status(200).json({ result, message: 'Update Successful !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -271,7 +279,7 @@ export const updatestartingprice = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result, message: 'Updated successfully !' });
+    res.status(200).json({ result, message: 'Update Successful !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
