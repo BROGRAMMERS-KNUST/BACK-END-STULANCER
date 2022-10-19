@@ -218,7 +218,7 @@ export const updatehirer = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result: result });
+    res.status(200).json({ result, message: 'Updated successfully !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
