@@ -3,7 +3,7 @@ import hirer from '../models/hirer.js';
 import serviceprovider from '../models/serviceprovider.js';
 import feedbackModel from '../models/feedback.js';
 import bcrypt from 'bcrypt';
-import sharp from 'sharp';
+
 //SIGN UP CONTROLLER
 
 export const signup = async (req, res) => {
@@ -71,7 +71,7 @@ export const signupserviceprovider = async (req, res) => {
 
     const existingUser = await serviceprovider.findOne({ email });
     if (existingUser)
-      return res.status(404).json({ message: 'Email already exists' });
+      return res.status(404).json({ message: 'Email already exists ' });
 
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -112,10 +112,10 @@ export const signupserviceprovider = async (req, res) => {
     );
 
     //SENDING RESPONSE
-    res.status(200).json({ result, token });
+    res.status(200).json({ result, message: 'Signed up successfully !' });
     console.log(result);
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).send({ message: 'Something went wrong' });
   }
 };
 
@@ -199,7 +199,7 @@ export const updateserviceProvider = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result: result });
+    res.status(200).json({ result, message: 'Submitted successfully !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -254,7 +254,7 @@ export const updatebrandpics = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result: result });
+    res.status(200).json({ result, message: 'Updated successfully !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
@@ -271,7 +271,7 @@ export const updatestartingprice = async (req, res) => {
       runValidators: true,
     });
 
-    res.status(200).json({ result: result });
+    res.status(200).json({ result, message: 'Updated successfully !' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
