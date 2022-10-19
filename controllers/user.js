@@ -244,7 +244,7 @@ export const feedback = async (req, res) => {
   try {
     const result = await feedbackModel.create(data);
 
-    res.status(200).json({ result });
+    res.status(200).json({ result, message: 'Thank you for your Feedback !' });
     console.log(result);
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
