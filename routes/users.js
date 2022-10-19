@@ -9,6 +9,7 @@ import {
   updatehirer,
   updatebrandpics,
   updatestartingprice,
+  serviceProviderInfo,
 } from '../controllers/user.js';
 import auth from '../middleware/auth.js';
 
@@ -20,7 +21,7 @@ router.patch('/updateservice/:id', updateserviceProvider);
 router.patch('/updatehirer/:id', updatehirer);
 router.patch('/updatebrandpics/:id', updatebrandpics);
 router.patch('/updatestartingprice/:id', updatestartingprice);
-router.patch('/signupservice/:id', updateserviceProvider);
+router.patch('/signupservice/:id', serviceProviderInfo);
 router.post('/loginhirer', loginHirer);
 router.post('/loginservicer', loginServicer);
 router.post('/feedback', feedback);
