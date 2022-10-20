@@ -10,6 +10,7 @@ import {
   updatebrandpics,
   updatestartingprice,
   serviceProviderInfo,
+  getNumberofStuLancers,
 } from '../controllers/user.js';
 import auth from '../middleware/auth.js';
 
@@ -25,5 +26,6 @@ router.patch('/signupservice/:id', serviceProviderInfo);
 router.post('/loginhirer', loginHirer);
 router.post('/loginservicer', loginServicer);
 router.post('/feedback', feedback);
+router.post('/getnumber', getNumberofStuLancers);
 
 export default router;

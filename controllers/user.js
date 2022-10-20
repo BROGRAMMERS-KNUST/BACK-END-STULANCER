@@ -165,7 +165,7 @@ export const loginServicer = async (req, res) => {
     //CHECKING IF USER EXISTS
     const existingUser = await serviceprovider.findOne({ email });
     if (!existingUser)
-      return res.status(404).json({ message: 'Users does not exist' });
+      return res.status(404).json({ message: 'User does not exist' });
 
     // //VERIFYING LOGIN PASSWORD
     const isPasswordCorrect = await bcrypt.compare(
@@ -299,6 +299,18 @@ export const updatestartingprice = async (req, res) => {
     });
 
     res.status(200).json({ result, message: 'Update Successful !' });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
+//GET NUMBER OF STULANCERS IN THE DATABASE
+export const getNumberofStuLancers = async (req, res) => {
+  try {
+    const result = await serviceprovider.countDocuments({
+      filterVar: parameter,
+    });
+    res.status(200).json({ result });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
