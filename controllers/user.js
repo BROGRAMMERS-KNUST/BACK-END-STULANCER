@@ -15,6 +15,10 @@ export const signup = async (req, res) => {
     if (existingUser)
       return res.status(404).json({ message: 'Email already exists' });
 
+    if (password.length < 6)
+      return res
+        .status(404)
+        .json({ message: 'Password must be more than 6 characters' });
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -73,6 +77,10 @@ export const signupserviceprovider = async (req, res) => {
     if (existingUser)
       return res.status(404).json({ message: 'Email already exists ' });
 
+    if (password.length < 6)
+      return res
+        .status(404)
+        .json({ message: 'Password must be more than 6 characters' });
     //ENCRYPTING PASSWORD
     const hashedPassword = await bcrypt.hash(password, 12);
 
