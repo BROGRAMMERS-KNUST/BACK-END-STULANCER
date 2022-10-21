@@ -300,9 +300,10 @@ export const updatestartingprice = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
 
-  //if (!(typeof data.startingPrice === 'number')) {
-  //return res.status(404).json({ message: 'Invalid input type !' });
-  //}
+  if (isNaN(data.startingPrice)) {
+    return res.status(404).json({ message: 'Invalid input type !' });
+  }
+
   try {
     const result = await serviceprovider.findByIdAndUpdate(id, data, {
       new: true,
