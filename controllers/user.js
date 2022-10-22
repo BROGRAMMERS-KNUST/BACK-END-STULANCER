@@ -212,8 +212,6 @@ export const updateserviceProvider = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
 
-  //if (!mongoose.Types.ObjectId.isValid(id))
-  //return res.status(404).send(`No account with id: ${id}`);
   try {
     const result = await serviceprovider.findByIdAndUpdate(id, data, {
       new: true,
@@ -230,9 +228,12 @@ export const updateserviceProvider = async (req, res) => {
 export const serviceProviderInfo = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
+  if (isNaN(data.startingPrice)) {
+    return res
+      .status(404)
+      .json({ message: 'Invalid input type for Starting Price !' });
+  }
 
-  //if (!mongoose.Types.ObjectId.isValid(id))
-  //return res.status(404).send(`No account with id: ${id}`);
   try {
     const result = await serviceprovider.findByIdAndUpdate(id, data, {
       new: true,
