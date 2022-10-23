@@ -7,6 +7,7 @@ import {
 const router = express.Router();
 
 router.post("/forgot-password", forgotpassword);
-router.post("/reset-password", resetpassword);
+router.get("/reset-password/:id/:token", resetpassword);
+// router.get("/reset-password/:id/:token", resetpassword);
 
 export default router;

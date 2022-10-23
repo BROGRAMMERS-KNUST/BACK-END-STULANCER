@@ -5,40 +5,48 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const forgotpassword = async (req, res) => {
+  let existingUser = null;
   try {
-    const { email, serviceType } = req.body;
+    const { email, serviceType } = await req.body;
     console.log(`email: ${email}..... accountType: ${serviceType} `);
     if (serviceType === "Hirer") {
-      const existingUser = await hirer.findOne({ email });
-      console.log(existingUser);
+      existingUser = await hirer.findOne({ email });
     }
     if (serviceType === "Stulancer") {
-      const existingUser = await serviceprovider.findOne({ email });
-      console.log(existingUser);
+      existingUser = await serviceprovider.findOne({ email });
     }
 
     //MAKING SURE USER EXISTS IN DATABASE
-    if (!existingUser) {
-      res.send("User email does not exist");
+
+    if (existingUser == null) {
+      return res.status(404).send({ msg: "User email does not exist" });
     }
 
-    //USER EXIST .... CREATING ONE TIME LINK FOR USER
+    // USER EXIST .... CREATING ONE TIME LINK FOR USER
     const JWT_SECRET = process.env.JWT_SECRET;
-    const secret = `JWT_SECRET${existingUser.password}`;
-    const payload = { id: existingUser.id, eemail: existingUser.email };
-    const token = Jwt.sign(payload, secret, { expiresIn: "15m" });
-    const link = `https://localhost/reset-password/${id}/${token}.`;
-    console.log("Password link has been sent to your email");
 
-    res.send(link);
+    const secret = `JWT_SECRET${existingUser.password}`;
+
+    // MAKING SURE USER EXISTS IN DATABASE
+    if (existingUser == null) {
+      res.status(404).json({ message: "User email does not exist" });
+      console.log("user does not exist");
+    }
+
+    // USER EXISTS .... CREATING ONE TIME LINK FOR USER
+    const payload = { id: existingUser.id, email: existingUser.email };
+
+    const token = Jwt.sign(payload, secret, { expiresIn: "15m" });
+
+    const link = `http://localhost/reset-password/${payload.id}/${token}`;
+    console.log(link);
   } catch (error) {
-    res.status(404).json({ msg: error });
+    res.status(404).json({ message: error });
   }
 };
 
 export const resetpassword = async (req, res) => {
-  try {
-  } catch (error) {
-    res.status(404).json({ msg: error });
-  }
+  const { id, token } = await req.params;
+  console.log(req.params);
+  res.status(200).json(req.params);
 };
