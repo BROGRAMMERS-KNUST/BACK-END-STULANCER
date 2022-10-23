@@ -116,12 +116,16 @@ export const signupserviceprovider = async (req, res) => {
         specificService: result.specificService,
         id: result._id,
       },
-      'test'
+      'test',
+      { expiresIn: '20s' }
     );
 
     //SENDING RESPONSE
-    res.status(200).json({ result, message: 'Signed up successfully !' });
+    res
+      .status(200)
+      .json({ result, token, message: 'Signed up successfully !' });
     console.log(result);
+    console.log(token);
   } catch (error) {
     res.status(500).send({ message: 'Something went wrong' });
   }
@@ -190,7 +194,8 @@ export const loginServicer = async (req, res) => {
         email: existingUser.email,
         id: existingUser._id,
       },
-      'test'
+      'test',
+      { expiresIn: '20s' }
     );
     res.status(200).json({
       result: existingUser,
@@ -207,8 +212,6 @@ export const updateserviceProvider = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
 
-  //if (!mongoose.Types.ObjectId.isValid(id))
-  //return res.status(404).send(`No account with id: ${id}`);
   try {
     const result = await serviceprovider.findByIdAndUpdate(id, data, {
       new: true,
@@ -225,9 +228,12 @@ export const updateserviceProvider = async (req, res) => {
 export const serviceProviderInfo = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
+  if (isNaN(data.startingPrice)) {
+    return res
+      .status(404)
+      .json({ message: 'Invalid input type for Starting Price !' });
+  }
 
-  //if (!mongoose.Types.ObjectId.isValid(id))
-  //return res.status(404).send(`No account with id: ${id}`);
   try {
     const result = await serviceprovider.findByIdAndUpdate(id, data, {
       new: true,
@@ -300,9 +306,10 @@ export const updatestartingprice = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
 
-  //if (!(typeof data.startingPrice === 'number')) {
-  //return res.status(404).json({ message: 'Invalid input type !' });
-  //}
+  if (isNaN(data.startingPrice)) {
+    return res.status(404).json({ message: 'Invalid input type !' });
+  }
+
   try {
     const result = await serviceprovider.findByIdAndUpdate(id, data, {
       new: true,
