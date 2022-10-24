@@ -228,6 +228,23 @@ export const updateserviceProvider = async (req, res) => {
 export const serviceProviderInfo = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
+
+  try {
+    const result = await serviceprovider.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({ result, message: 'Submitted Successfully !' });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
+//TAKE STARTING PRICE AND 3 BRAND PICS
+export const serviceProviderInfoSP = async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
   if (isNaN(data.startingPrice)) {
     return res
       .status(404)
