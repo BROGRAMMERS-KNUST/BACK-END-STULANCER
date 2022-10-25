@@ -6,6 +6,7 @@ const hirerSchema = new mongoose.Schema({
   password: { type: String, required: true },
   serviceType: { type: String, required: true },
   profilePic: String,
+  verifytoken: String,
 });
 
 export default mongoose.model('Hirer', hirerSchema);
