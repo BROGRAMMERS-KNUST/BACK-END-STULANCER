@@ -108,11 +108,11 @@ export const resetpassword = async (req, res) => {
       res.status(401).json({ status: 401, message: 'User not Exist !' });
     }
   } catch (error) {
-    res.status(401).json({ status: 401, message: 'Something went wrong !' });
+    res.status(401).json({ status: 401, message: 'Reset Link Expired !' });
   }
 };
 
-//RESET PASSWORD SERVICE PROVIDER
+//RESET PASSWORD HIRER
 export const resetpasswordhirer = async (req, res) => {
   const { id, token } = req.params;
   console.log(id);
@@ -150,6 +150,6 @@ export const resetpasswordhirer = async (req, res) => {
       res.status(401).json({ status: 401, message: 'User not Exist !' });
     }
   } catch (error) {
-    res.status(401).json({ status: 401, message: 'Something went wrong !' });
+    res.status(401).json({ status: 401, message: 'Reset Link Expired !' });
   }
 };
