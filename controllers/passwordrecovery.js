@@ -124,6 +124,7 @@ export const resetpasswordhirer = async (req, res) => {
       _id: id,
       verifytoken: token,
     });
+
     console.log(`valid user ${validuser}`);
     const verifyToken = Jwt.verify(token, keysecret);
     console.log(`verify token ${verifyToken._id}`);
