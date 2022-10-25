@@ -18,6 +18,7 @@ const serviceproviderSchema = new mongoose.Schema({
   brandPic1: String,
   brandPic2: String,
   brandPic3: String,
+  verifytoken: String,
 });
 
 export default mongoose.model('ServiceProvider', serviceproviderSchema);

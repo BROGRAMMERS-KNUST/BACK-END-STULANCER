@@ -68,6 +68,7 @@ export const signupserviceprovider = async (req, res) => {
     service,
     specificService,
     profilePic,
+    verifytoken,
   } = req.body;
 
   try {
@@ -97,6 +98,7 @@ export const signupserviceprovider = async (req, res) => {
       service: service,
       specificService: specificService,
       profilePic: profilePic,
+      verifytoken: verifytoken,
     };
     const result = await serviceprovider.create(data);
 
@@ -114,6 +116,7 @@ export const signupserviceprovider = async (req, res) => {
         service: result.service,
         profilePic: result.profilePic,
         specificService: result.specificService,
+        verifytoken: result.verifytoken,
         id: result._id,
       },
       'test',
