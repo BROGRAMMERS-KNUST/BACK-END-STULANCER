@@ -345,9 +345,7 @@ export const updatestartingprice = async (req, res) => {
 //GET NUMBER OF STULANCERS IN THE DATABASE
 export const getNumberofStuLancers = async (req, res) => {
   try {
-    const result = await serviceprovider.countDocuments({
-      filterVar: parameter,
-    });
+    const result = await serviceprovider.countDocuments({});
     res.status(200).json({ result });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });

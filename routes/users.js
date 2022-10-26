@@ -28,6 +28,6 @@ router.patch('/signupservicesp/:id', serviceProviderInfoSP);
 router.post('/loginhirer', loginHirer);
 router.post('/loginservicer', loginServicer);
 router.post('/feedback', feedback);
-router.post('/getnumber', getNumberofStuLancers);
+router.get('/getnumber', getNumberofStuLancers);
 
 export default router;
