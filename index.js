@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 
 //CONNECTION TO DATABASE
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -35,3 +35,6 @@ import passwordrecovery from './routes/passwordrecovery.js';
 app.use('/posts', postRoute);
 app.use('/user', userRoute);
 app.use('/passwordrecovery', passwordrecovery);
+app.get('/', (req, res) => {
+  res.send('APP IS RUNNING !');
+});
