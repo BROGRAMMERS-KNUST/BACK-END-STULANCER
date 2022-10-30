@@ -29,7 +29,7 @@ export const forgotpassword = async (req, res) => {
     if (setusertoken) {
       return res.status(200).json({
         result: setusertoken,
-        link: `This Link Valid For 3 MINUTES http://localhost:3000/reset-password/${userfind.id}/${setusertoken.verifytoken}`,
+        link: `This Link Valid For 3 MINUTES https://stulancer.netlify.app/reset-password/${userfind.id}/${setusertoken.verifytoken}`,
         message: ' A password reset link has been sent',
       });
     }
@@ -61,7 +61,7 @@ export const forgotpasswordhirer = async (req, res) => {
     if (setusertoken) {
       return res.status(200).json({
         result: setusertoken,
-        link: `This Link Valid For 3 MINUTES https://brogrammersknust.netlify.app/${userfind.id}/${setusertoken.verifytoken}`,
+        link: `This Link Valid For 3 MINUTES https://stulancer.netlify.app/reset-password-hirer/${userfind.id}/${setusertoken.verifytoken}`,
         message: ' A password reset link has been sent',
       });
     }
